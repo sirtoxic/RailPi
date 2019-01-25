@@ -1,11 +1,5 @@
-
-# Simple demo of of the PCA9685 PWM servo/LED controller library.
-# This will move channel 0 from min to max position repeatedly.
-# Author: Tony DiCola
-# License: Public Domain
 import time
 from Adafruit_PCA9685 import PCA9685
-
 
 class Pwm:
     CHANNELS = 16
@@ -24,16 +18,18 @@ class Pwm:
 
 
 class PwmTester:
-    SERVO_PULSE_MIN = 120
-    SERVO_PULSE_MAX = 602
+    SERVO_PULSE_MIN = 150
+    SERVO_PULSE_MAX = 590
 
     @classmethod
     def run(cls, boards):
         while True:
+            print('MIN')
             for pwm in boards:
                 for channel in pwm.channels:
                     pwm.module.set_pwm(channel, 0, PwmTester.SERVO_PULSE_MIN)
             time.sleep(1)
+            print('MAX')
             for pwm in boards:
                 for channel in pwm.channels:
                     pwm.module.set_pwm(channel, 0, PwmTester.SERVO_PULSE_MAX)
@@ -41,4 +37,4 @@ class PwmTester:
 
 
 if __name__ == '__main__':
-    PwmTester.run([Pwm(0x40, [0]), Pwm(0x41, [0])])
+    PwmTester.run([Pwm(0x40, [0]), Pwm(0x40, [4]), Pwm(0x40, [7])])
